@@ -57,3 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+###################################
+
+# Ignore config directory
+config/*
+
+# Besides examples
+!config/*.example.json

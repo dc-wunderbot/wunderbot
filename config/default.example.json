@@ -1,0 +1,8 @@
+{
+    "Bot": {
+        "dbConfig": { "host": "localhost", "port": 28015 },
+        "token": "inserttokenhere",
+        "name": "dbot",
+        "trigger": "."
+    }
+}
