@@ -1,4 +1,5 @@
 import RethinkDb from "rethinkdbdash";
+import logger from "winston";
 import cfg from "config";
 
 class DatabaseHandler {
@@ -6,11 +7,15 @@ class DatabaseHandler {
      * Create the database handler, handles all the database integration for
      * the bot.
      */
-    constructor() {
+    constructor(bot) {
+        this.b = bot;
         this.db = RethinkDb({
-            servers: [cfg.get("Bot.dbConfig")]
+            servers: [cfg.get("Bot.dbConfig")],
+            log(msg) {
+                logger.debug(msg, { from: `Shard-${bot.shard.id}` });
+            }
         });
-        console.log("DatabaseHandler Started...");
+        logger.debug("Started DatabaseHandler", { from: `Shard-${bot.shard.id}` });
     }
 
     getRawRethink() {
