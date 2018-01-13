@@ -28,7 +28,7 @@ class Stats {
     tripletCommaIndent(number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-
+    /* eslint-disable */
     formatReply(apiDataBlock, price_eur, price_gbp) {
         const {
             rank,
@@ -93,6 +93,7 @@ class Stats {
 
         return reply;
     }
+    /* eslint-enable */
 
     async getLbryApiData() {
         return needle("get", STATS_URL);
@@ -120,8 +121,8 @@ class Stats {
         const latestUpdate = new Date(usd.body[0].last_updated * 1000).toUTCString();
 
         if (usd.statusCode === 200) {
-            const price_eur = eur.body[0].price_eur;
-            const price_gbp = gbp.body[0].price_gbp;
+            const price_eur = eur.body[0].price_eur; // eslint-disable-line
+            const price_gbp = gbp.body[0].price_gbp; // eslint-disable-line
 
             const embed = {
                 description: this.formatReply(usd.body[0], price_eur, price_gbp),
