@@ -1,4 +1,5 @@
 import Discord from "discord.js";
+import logger from "winston";
 import cfg from "config";
 import fs from "fs";
 import path from "path";
@@ -17,7 +18,7 @@ class MessageHandler {
         this.bot.on("message", msg => {
             this.handleMsg(msg);
         });
-        console.log("MessageHandler Started...");
+        logger.debug("Started MessageHandler", { from: `Shard-${bot.shard.id}` });
         this.loadCommands();
     }
 
