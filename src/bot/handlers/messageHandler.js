@@ -27,27 +27,27 @@ class MessageHandler {
 
     loadCommands() {
         fs.readdir(path.join(__dirname, "../cmds"), (err, files) => {
-            if (err) console.error(err);
+            if (err) logger.error(err);
 
             const jsfiles = files.filter(f => f.split(".").pop() === "js");
 
             if (jsfiles.length <= 0) {
-                console.log("No commands to load!");
+                logger.warn("No commands to load!");
                 return null;
             }
 
-            console.log(`Loading ${jsfiles.length} commands...`);
+            logger.info(`Loading ${jsfiles.length} commands...`);
 
             jsfiles.forEach((fileName, i) => {
                 import(path.join(__dirname, `../cmds/${fileName}`))
                     .then(commandModule => {
                         let props = new commandModule.default(Discord, this.bot, this.db, this.db.getRawRethink()); // eslint-disable-line
                         this.commands.set(props.info.bCommand, props);
-                        console.log(`Successfuly loaded ${this.trigger}${props.info.bCommand}`);
+                        logger.info(`Successfuly loaded`, { from: `${this.trigger}${props.info.bCommand}` });
                     })
                     .catch(error => {
-                        console.log(`Command located in ${fileName} has failed to load with the error:`);
-                        console.log(error);
+                        logger.warn(`Command located in ${fileName} has failed to load with the error:`);
+                        logger.error(error);
                     })
             });
         });
