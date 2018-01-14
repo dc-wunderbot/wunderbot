@@ -2,6 +2,8 @@ import needle from "needle";
 import BlueBird from "bluebird";
 
 const STATS_URL = "https://api.coinmarketcap.com/v1/ticker/library-credit/";
+const DEFAULT_INCREASE_SYMBOL = ":small_red_triangle:";
+const DEFAULT_DECREASE_SYMBOL = ":small_red_triangle_down:";
 
 class Stats {
     /**
@@ -43,8 +45,8 @@ class Stats {
 
         const daily_usd_volume = apiDataBlock["24h_volume_usd"]; // can't begin with a number without quotes
 
-        const hr_indicator = percent_change_1h - 0 > 0 ? ":thumbsup:" : ":thumbsdown:";
-        const d_indicator = percent_change_24h - 0 > 0 ? ":thumbsup:" : ":thumbsdown:";
+        const hr_indicator = percent_change_1h - 0 > 0 ? DEFAULT_INCREASE_SYMBOL : DEFAULT_DECREASE_SYMBOL;
+        const d_indicator = percent_change_24h - 0 > 0 ? DEFAULT_INCREASE_SYMBOL : DEFAULT_DECREASE_SYMBOL;
 
         const reply =
             `${"**" +

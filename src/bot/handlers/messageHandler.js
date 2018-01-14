@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 
 const DEFAULT_FAILURE_TIMEOUT = 5000;
+const DEFAULT_REJECTION_SYMBOL = "❌";
 
 class MessageHandler {
     /**
@@ -80,20 +81,20 @@ class MessageHandler {
     }
 
     async notEnabled(msg) {
-        msg.react("❌");
-        const m = await msg.channel.send("❌ That command is not enabled on this server.");
+        msg.react(DEFAULT_REJECTION_SYMBOL);
+        const m = await msg.channel.send(`${DEFAULT_REJECTION_SYMBOL} That command is not enabled on this server.`);
         m.delete(DEFAULT_FAILURE_TIMEOUT);
     }
 
     async noPerm(msg) {
-        msg.react("❌");
-        const m = await msg.channel.send("❌ You do not have the rank needed to use this command.");
+        msg.react(DEFAULT_REJECTION_SYMBOL);
+        const m = await msg.channel.send(`${DEFAULT_REJECTION_SYMBOL} You do not have the rank needed to use this command.`);
         m.delete(DEFAULT_FAILURE_TIMEOUT);
     }
 
     async noPm(msg) {
-        msg.react("❌");
-        const m = await msg.channel.send("❌ This command can´t be called from PMs.");
+        msg.react(DEFAULT_REJECTION_SYMBOL);
+        const m = await msg.channel.send(`${DEFAULT_REJECTION_SYMBOL} This command can´t be called from PMs.`);
         m.delete(DEFAULT_FAILURE_TIMEOUT);
     }
 }
