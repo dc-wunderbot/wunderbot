@@ -3,7 +3,7 @@ import cfg from "config";
 import logger from "./helpers/logger";
 import MessageHandler from "./handlers/messageHandler";
 import DatabaseHandler from "./handlers/databaseHandler";
-import EventHandler from "./handlers/EventHandler";
+import EventHandler from "./handlers/eventHandler";
 
 const bot = new Discord.Client();
 bot.on("ready", () => {
