@@ -20,7 +20,8 @@
     "scripts": {
         "build": "babel ./src --experimental --source-maps-inline -d ./dist",
         "lint": "eslint ./src",
-        "start": "nodemon ./src/index.js --exec babel-node --presets env"
+        "start": "nodemon ./src/index.js --exec babel-node --presets env",
+        "debug": "nodemon ./src/index.js --inspect-brk=41000 --exec babel-node --presets env"
     },
     "license": "MIT",
     "devDependencies": {

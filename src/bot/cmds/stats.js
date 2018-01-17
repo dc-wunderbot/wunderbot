@@ -1,6 +1,7 @@
 import needle from "needle";
 import BlueBird from "bluebird";
 import CoinMarket from "../external/coinMarket";
+import dqi from "../helpers/discordQueryInterface";
 
 const STATS_URL = CoinMarket.tickerStatsUrl;
 const DEFAULT_INCREASE_SYMBOL = ":small_red_triangle:";
@@ -49,72 +50,42 @@ class Stats {
         const hr_indicator = percent_change_1h - 0 > 0 ? DEFAULT_INCREASE_SYMBOL : DEFAULT_DECREASE_SYMBOL;
         const d_indicator = percent_change_24h - 0 > 0 ? DEFAULT_INCREASE_SYMBOL : DEFAULT_DECREASE_SYMBOL;
 
-        const reply =
-            `${"**" +
-                `Rank: [${rank}](${STATS_URL})` +
-                "**" +
-                "\n" +
-                "**" +
-                "Data" +
-                "**" +
-                "\n" +
-                "Market Cap: " +
-                `[${this.tripletCommaIndent(market_cap_usd)}](${STATS_URL})` +
-                "\n" +
-                "Total Supply: " +
-                `[${this.tripletCommaIndent(total_supply)}](${STATS_URL})` +
-                " LBC" +
-                "\n" +
-                "Circulating Supply: " +
-                `[${this.tripletCommaIndent(available_supply)}](${STATS_URL})` +
-                " LBC" +
-                "\n" +
-                "24 Hour Volume: " +
-                `[$ ${this.tripletCommaIndent(daily_usd_volume)}](${STATS_URL})` +
-                "\n" +
-                "\n" +
-                "**" +
-                "Price" +
-                "**" +
-                "\n" +
-                `BTC [₿ ${(price_btc - 0).toFixed(8)}](${STATS_URL})` +
-                "\n" +
-                `USD [$ ${(price_usd - 0).toFixed(2)}](${STATS_URL})` +
-                "\n" +
-                `EUR [€ ${(price_eur - 0).toFixed(2)}](${STATS_URL})` +
-                "\n" +
-                `GBP [£ ${(price_gbp - 0).toFixed(2)}](${STATS_URL})` +
-                "\n" +
-                "\n" +
-                "**" +
-                "% Change" +
-                "**" +
-                "\n" +
-                `1 Hour: [${percent_change_1h}](${STATS_URL})  `}${hr_indicator}\n` +
-            `\n` +
-            `24 Hours: [${percent_change_24h}](${STATS_URL})  ${d_indicator}\n`;
-
-        return reply;
+        return dqi
+            .bold("Rank: " + dqi.url(rank, STATS_URL))
+            .newLine()
+            .bold("Data")
+            .newLine()
+            .std("Market Cap: " + dqi.url(this.tripletCommaIndent(market_cap_usd), STATS_URL))
+            .newLine()
+            .std("Total supply: " + dqi.url(this.tripletCommaIndent(total_supply), STATS_URL))
+            .newLine()
+            .std("Circulating supply: " + dqi.url(this.tripletCommaIndent(available_supply), STATS_URL) + " LBC")
+            .newLine()
+            .std("24 hour volume: " + dqi.url(this.tripletCommaIndent(daily_usd_volume), STATS_URL))
+            .doubleNewLine()
+            .bold("Price")
+            .newLine()
+            .std("BTC " + dqi.url(`${dqi.btc} ${(price_btc - 0).toFixed(8)}`, STATS_URL))
+            .newLine()
+            .std("USD " + dqi.url(`$ ${(price_usd - 0).toFixed(2)}`, STATS_URL))
+            .newLine()
+            .std("EUR " + dqi.url(`${dqi.eur} ${(price_eur - 0).toFixed(2)}`, STATS_URL))
+            .newLine()
+            .std("GBP " + dqi.url(`${dqi.gbp} ${(price_gbp - 0).toFixed(2)}`, STATS_URL))
+            .doubleNewLine()
+            .bold("% change")
+            .newLine()
+            .std(`1 Hour: [${percent_change_1h}](${STATS_URL})  ${hr_indicator}`)
+            .newLine()
+            .std(`24 Hours: [${percent_change_24h}](${STATS_URL})  ${d_indicator}`)
+            .toString();
     }
     /* eslint-enable */
-
-    async getCMUsdData() {
-        return CoinMarket.getTicker("library-credit", "USD");
-    }
-
-    async getCMEurData() {
-        return CoinMarket.getTicker("library-credit", "EUR");
-    }
-
-    async getCMGbpData() {
-        return CoinMarket.getTicker("library-credit", "GBP");
-    }
-
     requestBlock() {
         return BlueBird.props({
-            usd: this.getCMUsdData(),
-            eur: this.getCMEurData(),
-            gbp: this.getCMGbpData()
+            usd: CoinMarket.getTicker("library-credit", "USD"),
+            eur: CoinMarket.getTicker("library-credit", "EUR"),
+            gbp: CoinMarket.getTicker("library-credit", "GBP")
         });
     }
 
