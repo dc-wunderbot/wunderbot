@@ -51,8 +51,7 @@ class AltPrice {
 
         msg.reply(
             dqi
-                .std(`${amount} ${currencyFrom} = ${amount * price} ${currencyTo}`)
-                .newLine()
+                .line(`${amount} ${currencyFrom} = ${amount * price} ${currencyTo}`)
                 .std(`Updated: [UTC] ${now.toUTCString()}`)
                 .toString()
         );

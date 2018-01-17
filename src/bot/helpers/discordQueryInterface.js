@@ -9,6 +9,10 @@ class DiscordQueryInterface {
         this.query += query;
         return this;
     }
+    line(query) {
+        this.query += `${query}\n`;
+        return this;
+    }
     bold(query) {
         this.query += `**${query}**`;
         return this;
