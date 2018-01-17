@@ -27,7 +27,9 @@ class DiscordQueryInterface {
 }
 
 DiscordQueryInterface.prototype.toString = function(){
-    return this.query;
+    const { query } = this;
+    this.query = "";
+    return query;
 }
 
 export default new DiscordQueryInterface();
