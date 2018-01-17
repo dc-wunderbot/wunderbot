@@ -1,7 +1,8 @@
 import needle from "needle";
 import BlueBird from "bluebird";
+import CoinMarket from "../external/coinMarket";
 
-const STATS_URL = "https://api.coinmarketcap.com/v1/ticker/library-credit/";
+const STATS_URL = CoinMarket.tickerStatsUrl;
 const DEFAULT_INCREASE_SYMBOL = ":small_red_triangle:";
 const DEFAULT_DECREASE_SYMBOL = ":small_red_triangle_down:";
 
@@ -97,23 +98,23 @@ class Stats {
     }
     /* eslint-enable */
 
-    async getLbryApiData() {
-        return needle("get", STATS_URL);
+    async getCMUsdData() {
+        return CoinMarket.getTicker("library-credit", "USD");
     }
 
-    async getLbryApiEuroData() {
-        return needle("get", `${STATS_URL}?convert=EUR`);
+    async getCMEurData() {
+        return CoinMarket.getTicker("library-credit", "EUR");
     }
 
-    async getLbryApiPoundData() {
-        return needle("get", `${STATS_URL}?convert=GBP`);
+    async getCMGbpData() {
+        return CoinMarket.getTicker("library-credit", "GBP");
     }
 
     requestBlock() {
         return BlueBird.props({
-            usd: this.getLbryApiData(),
-            eur: this.getLbryApiEuroData(),
-            gbp: this.getLbryApiPoundData()
+            usd: this.getCMUsdData(),
+            eur: this.getCMEurData(),
+            gbp: this.getCMGbpData()
         });
     }
 
