@@ -33,17 +33,17 @@ class AltPrice {
         let currencyTo = "BTC";
         let amount = 0;
 
-        currencyFrom = args[0].toUpperCase()
-        
-        if(args[1] !== undefined){
-            currencyTo = args[1].toUpperCase()
+        currencyFrom = args[0].toUpperCase();
+
+        if (args[1] !== undefined) {
+            currencyTo = args[1].toUpperCase();
         }
 
         if (this.getValidatedAmount(args[2]) === null) {
             msg.reply("Please specify a number for <amount>");
             return;
         }
-        
+
         amount = args[2] - 0;
 
         const cryptoCompareData = await CryptoCompare.getPrice(currencyFrom, currencyTo);

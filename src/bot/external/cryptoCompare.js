@@ -4,7 +4,7 @@ const ALL_COIN_LIST = "https://min-api.cryptocompare.com/data/all/coinlist";
 const PRICE_URL = "https://min-api.cryptocompare.com/data/price";
 
 class CryptoCompare {
-    constructor () {
+    constructor() {
         this.allCoinList = ALL_COIN_LIST;
         this.priceUrl = PRICE_URL;
     }

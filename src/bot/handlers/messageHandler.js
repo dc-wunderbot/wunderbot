@@ -48,7 +48,7 @@ class MessageHandler {
                     .catch(error => {
                         logger.warn(`Command located in ${fileName} has failed to load with the error:`);
                         logger.error(error);
-                    })
+                    });
             });
         });
     }
@@ -88,7 +88,9 @@ class MessageHandler {
 
     async noPerm(msg) {
         msg.react(DEFAULT_REJECTION_SYMBOL);
-        const m = await msg.channel.send(`${DEFAULT_REJECTION_SYMBOL} You do not have the rank needed to use this command.`);
+        const m = await msg.channel.send(
+            `${DEFAULT_REJECTION_SYMBOL} You do not have the rank needed to use this command.`
+        );
         m.delete(DEFAULT_FAILURE_TIMEOUT);
     }
 
